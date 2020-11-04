@@ -10,23 +10,12 @@
                 <div class="card-body">
                     <form action="{{ route('storePost') }}" method="post">
                         @csrf
-                        <div class="form-group">
-                            <label for="title">Post Title</label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="post title">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="content">Post Content</label>
-                            <textarea class="form-control" id="content" name="content" rows="8"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary float-right">Save</button>
+                        @include('posts._fields', ['butTxt' => 'Save'])
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 @endsection
