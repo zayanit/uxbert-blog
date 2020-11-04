@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $posts = auth()->user()->posts()->paginate(20);
+        
+        return view('home', compact('posts'));
     }
 }

@@ -33,7 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a href="{{ url('/home') }}" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('allPosts') }}" class="nav-link {{ (request()->is('posts*')) ? 'active' : '' }}">Blog</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

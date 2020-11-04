@@ -21,10 +21,11 @@ Route::get('/', function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('posts', [PostsController::class, 'index'])->name('allPosts');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('posts/create', [PostsController::class, 'create']);
-    Route::get('posts/{post}', [PostsController::class, 'show']);
+    Route::get('posts/{post}', [PostsController::class, 'show'])->name('showPost');
     Route::get('posts/{post}/edit', [PostsController::class, 'edit'])->name('editPost');
 
     Route::post('posts', [PostsController::class, 'store'])->name('storePost');
