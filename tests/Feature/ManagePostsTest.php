@@ -43,4 +43,33 @@ class ManagePostsTest extends TestCase
 
         $this->post('/posts', $attributes)->assertSessionHasErrors('title');
     }
+
+    /** @test */
+    public function a_user_can_update_a_post()
+    {
+        $post = Post::factory()->create();
+
+        $attributes = [
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->sentence
+        ];
+
+        $this->actingAs($post->owner)
+            ->patch($post->path(), $attributes)
+            ->assertRedirect($post->path());
+
+        $this->assertDatabaseHas('posts', $attributes);
+    }
+
+    /** @test */
+    public function an_authenticated_user_cannot_update_the_posts_of_other()
+    {
+        $this->signIn();
+
+        $post = Post::factory()->create();
+
+        $this->patch($post->path(), [
+            'title' => $this->faker->sentence
+        ])->assertStatus(403);
+    }
 }

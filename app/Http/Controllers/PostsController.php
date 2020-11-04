@@ -24,4 +24,20 @@ class PostsController extends Controller
     {
         return view('posts.show', compact('post'));
     }
+
+    public function edit(Post $post)
+    {
+        $this->authorize('update', $post);
+
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(PostsRequest $request, Post $post)
+    {
+        $this->authorize('update', $post);
+
+        $post->update($request->all());
+
+        return redirect($post->path());
+    }
 }

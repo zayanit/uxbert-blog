@@ -24,7 +24,7 @@ class PostFactory extends Factory
     {
         return [
             'owner_id' => User::factory(),
-            'title' => $this->faker->title,
+            'title' => $this->faker->sentence(5),
             'content' => $this->faker->paragraph,
         ];
     }
