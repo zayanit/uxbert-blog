@@ -24,13 +24,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('posts', [PostsController::class, 'index'])->name('allPosts');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('posts/create', [PostsController::class, 'create']);
-    Route::get('posts/{post}', [PostsController::class, 'show'])->name('showPost');
+    Route::get('posts/create', [PostsController::class, 'create'])->name('createPost');
     Route::get('posts/{post}/edit', [PostsController::class, 'edit'])->name('editPost');
 
     Route::post('posts', [PostsController::class, 'store'])->name('storePost');
     Route::patch('posts/{post}', [PostsController::class, 'update'])->name('updatePost');
 });
+
+Route::get('posts/{post}', [PostsController::class, 'show'])->name('showPost');
 
 
 Auth::routes();
