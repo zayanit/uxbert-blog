@@ -19,4 +19,9 @@ class PostsController extends Controller
 
         return redirect($post->path());
     }
+
+    public function show(Post $post)
+    {
+        return view('posts.show', compact('post'));
+    }
 }

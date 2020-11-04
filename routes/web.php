@@ -21,7 +21,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('posts/create', [PostsController::class, 'create']);
+    Route::get('posts/{post}', [PostsController::class, 'show']);
+
     Route::post('posts', [PostsController::class, 'store'])->name('storePost');
 });

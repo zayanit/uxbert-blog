@@ -23,8 +23,14 @@ class ManagePostsTest extends TestCase
             'content' => $this->faker->sentence
         ];
 
-        $this->post('/posts', $attributes);
+        $response = $this->post('/posts', $attributes);
 
-        $this->assertDatabaseHas('posts', $attributes);
+        $post = Post::where($attributes)->first();
+
+        $response->assertRedirect($post->path());
+
+        $this->get($post->path())
+            ->assertSee($attributes['title'])
+            ->assertSee($attributes['content']);
     }
 }
