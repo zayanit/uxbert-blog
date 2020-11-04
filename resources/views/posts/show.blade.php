@@ -7,7 +7,11 @@
             <div class="card">
                 <div class="card-header">
                     {{ $post->title }}
-                    <a class="float-right btn btn-primary" href="{{ route('editPost', $post->id) }}">Update Post</a>
+                    @can('update', $post)
+                        <a class="float-right btn btn-primary" href="{{ route('editPost', $post->id) }}">
+                            Update Post
+                        </a>
+                    @endcan
                 </div>
 
                 <div class="card-body">
