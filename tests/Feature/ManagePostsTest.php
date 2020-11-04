@@ -33,4 +33,14 @@ class ManagePostsTest extends TestCase
             ->assertSee($attributes['title'])
             ->assertSee($attributes['content']);
     }
+
+    /** @test */
+    public function a_post_requires_a_title()
+    {
+        $this->signIn();
+
+        $attributes = Post::factory()->raw(['title' => '']);
+
+        $this->post('/posts', $attributes)->assertSessionHasErrors('title');
+    }
 }
