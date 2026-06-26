@@ -9,8 +9,13 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
+    "overrides": {
+        "shell-quote": ">=1.8.4",
+        "form-data": ">=4.0.6",
+        "launch-editor": ">=2.14.1"
+    },
     "devDependencies": {
-        "axios": "^1.7",
+        "axios": "^1.16",
         "bootstrap": "^5.0.0",
         "cross-env": "^7.0",
         "jquery": "^3.2",
@@ -21,6 +26,6 @@
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": ">=3.0.0"
+        "vue-template-compiler": "^2.7"
     }
 }
