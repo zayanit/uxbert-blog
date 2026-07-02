@@ -32,6 +32,11 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::middleware('web')
             ->group(base_path('routes/web.php'));
+
+        // Routes are named via a fluent ->name() call after being added to the
+        // route collection, so the collection's name lookup table must be
+        // rebuilt afterward or route()/Route::has() won't find any of them.
+        Route::getRoutes()->refreshNameLookups();
     }
 
     /**
