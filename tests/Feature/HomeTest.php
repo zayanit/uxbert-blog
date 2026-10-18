@@ -38,4 +38,15 @@ class HomeTest extends TestCase
         $response->assertSee($ownPost->title);
         $response->assertDontSee($othersPost->title);
     }
+
+    /** @test */
+    public function the_home_page_lists_the_newest_posts_first()
+    {
+        $user = $this->signIn();
+
+        Post::factory()->create(['owner_id' => $user->id, 'title' => 'Older post', 'created_at' => now()->subDay()]);
+        Post::factory()->create(['owner_id' => $user->id, 'title' => 'Newer post']);
+
+        $this->get('/home')->assertSeeInOrder(['Newer post', 'Older post']);
+    }
 }
