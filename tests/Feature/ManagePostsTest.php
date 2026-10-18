@@ -141,4 +141,13 @@ class ManagePostsTest extends TestCase
         $this->get($post->path())
             ->assertDontSee('Update Post');
     }
+
+    /** @test */
+    public function the_posts_index_lists_the_newest_posts_first()
+    {
+        Post::factory()->create(['title' => 'Older post', 'created_at' => now()->subDay()]);
+        Post::factory()->create(['title' => 'Newer post']);
+
+        $this->get('/posts')->assertSeeInOrder(['Newer post', 'Older post']);
+    }
 }
