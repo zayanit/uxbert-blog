@@ -6,13 +6,14 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ManagePostsTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    /** @test */
+    #[Test]
     public function a_user_can_create_a_post()
     {
         $this->signIn();
@@ -35,7 +36,7 @@ class ManagePostsTest extends TestCase
             ->assertSee($attributes['content']);
     }
 
-    /** @test */
+    #[Test]
     public function a_post_requires_a_title()
     {
         $this->signIn();
@@ -45,7 +46,7 @@ class ManagePostsTest extends TestCase
         $this->post('/posts', $attributes)->assertSessionHasErrors('title');
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_update_a_post()
     {
         $post = Post::factory()->create();
@@ -62,7 +63,7 @@ class ManagePostsTest extends TestCase
         $this->assertDatabaseHas('posts', $attributes);
     }
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_cannot_update_the_posts_of_other()
     {
         $this->signIn();
@@ -74,7 +75,7 @@ class ManagePostsTest extends TestCase
         ])->assertStatus(403);
     }
 
-    /** @test */
+    #[Test]
     public function an_owner_cannot_reassign_a_post_to_another_user()
     {
         $post = Post::factory()->create();
@@ -89,7 +90,7 @@ class ManagePostsTest extends TestCase
         $this->assertTrue($post->fresh()->owner->is($post->owner));
     }
 
-    /** @test */
+    #[Test]
     public function a_guest_can_view_all_posts()
     {
         $posts = Post::factory()->count(3)->create();
@@ -101,7 +102,7 @@ class ManagePostsTest extends TestCase
         }
     }
 
-    /** @test */
+    #[Test]
     public function the_posts_list_is_paginated()
     {
         Post::factory()->count(21)->create();
@@ -113,7 +114,7 @@ class ManagePostsTest extends TestCase
         });
     }
 
-    /** @test */
+    #[Test]
     public function the_posts_list_truncates_long_content()
     {
         $post = Post::factory()->create([
@@ -126,7 +127,7 @@ class ManagePostsTest extends TestCase
         $response->assertDontSee(str_repeat('a', 200));
     }
 
-    /** @test */
+    #[Test]
     public function a_guest_can_view_a_single_post()
     {
         $post = Post::factory()->create();
@@ -137,7 +138,7 @@ class ManagePostsTest extends TestCase
             ->assertSee($post->content);
     }
 
-    /** @test */
+    #[Test]
     public function the_owner_sees_an_update_link_when_viewing_their_post()
     {
         $post = Post::factory()->create();
@@ -147,7 +148,7 @@ class ManagePostsTest extends TestCase
             ->assertSee('Update Post');
     }
 
-    /** @test */
+    #[Test]
     public function a_non_owner_does_not_see_an_update_link_when_viewing_a_post()
     {
         $this->signIn();
@@ -158,7 +159,7 @@ class ManagePostsTest extends TestCase
             ->assertDontSee('Update Post');
     }
 
-    /** @test */
+    #[Test]
     public function the_posts_index_lists_the_newest_posts_first()
     {
         Post::factory()->create(['title' => 'Older post', 'created_at' => now()->subDay()]);

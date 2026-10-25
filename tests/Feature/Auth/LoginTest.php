@@ -4,19 +4,20 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function a_guest_can_view_the_login_form()
     {
         $this->get('/login')->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_is_redirected_away_from_the_login_form()
     {
         $this->signIn();
@@ -24,7 +25,7 @@ class LoginTest extends TestCase
         $this->get('/login')->assertRedirect('/home');
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_login_with_correct_credentials()
     {
         $user = User::factory()->create([
@@ -40,7 +41,7 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    /** @test */
+    #[Test]
     public function a_user_cannot_login_with_incorrect_credentials()
     {
         $user = User::factory()->create([
@@ -56,7 +57,7 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    /** @test */
+    #[Test]
     public function a_user_can_logout()
     {
         $this->signIn();

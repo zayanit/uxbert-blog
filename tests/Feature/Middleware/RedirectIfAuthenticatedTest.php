@@ -3,13 +3,14 @@
 namespace Tests\Feature\Middleware;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RedirectIfAuthenticatedTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function an_authenticated_user_is_redirected_away_from_guest_only_routes()
     {
         $this->signIn();
@@ -18,7 +19,7 @@ class RedirectIfAuthenticatedTest extends TestCase
         $this->get('/register')->assertRedirect('/home');
     }
 
-    /** @test */
+    #[Test]
     public function a_guest_can_access_guest_only_routes()
     {
         $this->get('/login')->assertStatus(200);

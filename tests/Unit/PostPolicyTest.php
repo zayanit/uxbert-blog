@@ -6,13 +6,14 @@ use App\Models\Post;
 use App\Models\User;
 use App\Policies\PostPolicy;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PostPolicyTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function the_owner_can_update_their_post()
     {
         $post = Post::factory()->create();
@@ -20,7 +21,7 @@ class PostPolicyTest extends TestCase
         $this->assertTrue((new PostPolicy)->update($post->owner, $post));
     }
 
-    /** @test */
+    #[Test]
     public function a_non_owner_cannot_update_the_post()
     {
         $user = User::factory()->create();

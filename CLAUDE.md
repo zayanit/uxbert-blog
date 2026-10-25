@@ -50,4 +50,4 @@ This is a small, conventional Laravel app centered around a single `Post` resour
 
 - Feature tests (`tests/Feature`) hit routes and assert HTTP behavior/DB state; unit tests (`tests/Unit`) test model behavior directly. Both typically use `RefreshDatabase` and `WithFaker`.
 - `Tests\TestCase::signIn($user = null)` is the standard helper for authenticating in tests — creates a user via factory if none is given, and calls `actingAs`.
-- Test methods use the `/** @test */` docblock annotation with snake_case method names rather than a `test` prefix.
+- Test methods use the `#[Test]` attribute (`PHPUnit\Framework\Attributes\Test`) with snake_case method names rather than a `test` prefix. Don't use `/** @test */` docblocks; PHPUnit 11 deprecates them and PHPUnit 12 drops them.

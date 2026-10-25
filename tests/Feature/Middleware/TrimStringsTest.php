@@ -4,13 +4,14 @@ namespace Tests\Feature\Middleware;
 
 use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class TrimStringsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function leading_and_trailing_whitespace_is_trimmed_from_input()
     {
         $this->signIn();
@@ -26,7 +27,7 @@ class TrimStringsTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function the_password_field_is_excluded_from_trimming()
     {
         $this->post('/register', [
