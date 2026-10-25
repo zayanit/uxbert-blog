@@ -6,13 +6,14 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_has_many_posts()
     {
         $user = User::factory()->create();
@@ -22,7 +23,7 @@ class UserTest extends TestCase
         $this->assertTrue($user->posts->contains($post));
     }
 
-    /** @test */
+    #[Test]
     public function it_only_returns_its_own_posts()
     {
         $user = User::factory()->create();
