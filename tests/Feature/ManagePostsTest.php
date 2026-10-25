@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -71,6 +72,21 @@ class ManagePostsTest extends TestCase
         $this->patch($post->path(), [
             'title' => $this->faker->sentence
         ])->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_owner_cannot_reassign_a_post_to_another_user()
+    {
+        $post = Post::factory()->create();
+        $otherUser = User::factory()->create();
+
+        $this->actingAs($post->owner)
+            ->patch($post->path(), [
+                'title' => $this->faker->sentence,
+                'owner_id' => $otherUser->id,
+            ]);
+
+        $this->assertTrue($post->fresh()->owner->is($post->owner));
     }
 
     /** @test */
